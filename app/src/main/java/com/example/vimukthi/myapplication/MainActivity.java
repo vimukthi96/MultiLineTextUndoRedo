@@ -19,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
     Button redoBtn;
     Button undoBtn;
     TextViewUndoRedo helper;
+    Menu menu;
+    MenuItem undo_btn;
+    boolean b = false;
+    MenuItem redo_btn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         undoBtn = (Button) findViewById(R.id.undo);
         undoBtn.setEnabled(false);
         redoBtn.setEnabled(false);
+
         editText = (MultiAutoCompleteTextView) findViewById(R.id.edittext);
         helper = new TextViewUndoRedo(editText);
 
@@ -69,10 +75,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean textInType() {
         if (editText.getText().length() == 0) {
             undoBtn.setEnabled(false);
-            redoBtn.setEnabled(false);
+            undo_btn.setVisible(false);
+         //   redo_btn.setVisible(false);
             return false;
         } else {
             undoBtn.setEnabled(true);
+            b=true;
+            undo_btn.setVisible(b);
             return true;
 
         }
@@ -91,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.new_file_view, menu);
-       // locButton = (ImageButton) menu.findItem(R.id.action_undo_btn).getActionView();
-       // loButton = (ImageButton)menu.findItem(R.id.action_redo_btn).getActionView();
+        undo_btn = (MenuItem) menu.findItem(R.id.action_undo_btn);
+        redo_btn = (MenuItem) menu.findItem(R.id.action_redo_btn);
         return true;
     }
     @Override
@@ -106,7 +115,11 @@ public class MainActivity extends AppCompatActivity {
         int id=item.getItemId();
         switch (id){
             case  R.id.action_undo_btn:
-                performUndo();
+                if (textInType() == true) {
+
+                    performUndo();
+                }
+                redo_btn.setVisible(true);
                 return true;
             case  R.id.action_redo_btn:
                 performRedo();
@@ -116,6 +129,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+       // undo_btn.setEnabled(b);
+        redo_btn.setVisible(false);
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
 
 
 
