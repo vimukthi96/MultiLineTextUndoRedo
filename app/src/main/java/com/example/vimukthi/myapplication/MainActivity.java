@@ -87,21 +87,33 @@ public class MainActivity extends AppCompatActivity {
         helper.undo();
     }
 
-    ImageButton locButton;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.new_file_view, menu);
-        locButton = (ImageButton) menu.findItem(R.id.action_undo_btn).getActionView();
-        locButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(MainActivity.this,"edjebdre",Toast.LENGTH_SHORT).show();
-              //  performUndo();
-           }
-    });
+       // locButton = (ImageButton) menu.findItem(R.id.action_undo_btn).getActionView();
+       // loButton = (ImageButton)menu.findItem(R.id.action_redo_btn).getActionView();
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+       // int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        int id=item.getItemId();
+        switch (id){
+            case  R.id.action_undo_btn:
+                performUndo();
+                return true;
+            case  R.id.action_redo_btn:
+                performRedo();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

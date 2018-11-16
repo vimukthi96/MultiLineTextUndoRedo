@@ -15,6 +15,7 @@
         android:icon="@drawable/ic_redo_black_24dp"
         app:showAsAction="always"
         android:title="redo"
+        app:actionViewClass="android.widget.ImagButton"
         />
 
 
